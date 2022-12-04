@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,11 +8,12 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="#">
+    <form method="post" th:action="@{/}" th:object="${item}">
         <div class="input-group mb-3 mt-3">
-            <input type="text" class="form-control" placeholder="Название новой покупки" aria-label="Название новой покупки" aria-describedby="basic-addon2">
+            <input type="text" th:field="*{name}" class="form-control"
+                   placeholder="Название новой покупки" aria-label="Название новой покупки" aria-describedby="basic-addon2">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">Добавить</button>
+                <button class="btn btn-outline-primary" type="submit">Добавить</button>
             </div>
         </div>
     </form>
@@ -22,36 +23,20 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Название</th>
+            <th scope="col">Действие</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Мясо</td>
+        <tr th:each="item : ${items}">
+            <th scope="row" th:text="${item.id}"></th>
+            <th scope="row" th:text="${item.name}"></th>
             <td>
-                <form>
+                <form th:action="@{/{id}(id = ${item.id})}" th:method="delete">
                     <button type="submit" class="btn btn-outline-danger">Удалить</button>
                 </form>
             </td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Молоко</td>
-            <td>
-                <form>
-                    <button type="submit" class="btn btn-outline-danger">Удалить</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Квас</td>
-            <td>
-                <form>
-                    <button type="submit" class="btn btn-outline-danger">Удалить</button>
-                </form>
-            </td>
-        </tr>
+
         </tbody>
     </table>
 </div>
